@@ -45,6 +45,7 @@ public class MainReborn {
 
                 if (matcher.find() && matcher.start() == 0) {
                     map.get(cPattern).append(i+1).append(") ").append(textLines[i], matcher.end() + 1, textLines[i].length()).append("\n");
+                    break;
                 }
             }
         }
