@@ -26,32 +26,22 @@ public class MainReborn {
     public static String printTextPerRole(String[] roles, String[] textLines) {
         StringBuilder sb = new StringBuilder();
 
-        List<Pattern> patternList = new ArrayList<>();
+        Map<String, StringBuilder> map = new HashMap<>();
 
-        Map<Pattern, StringBuilder> map = new HashMap<>();
-
-        for (String role : roles) {
-            patternList.add(Pattern.compile(role + ":"));
-        }
-
-        for (Pattern r : patternList) {
+        for (String r : roles) {
             map.put(r, new StringBuilder());
         }
 
         for (int i = 0; i < textLines.length; i++) {
 
-            for (Pattern cPattern : patternList) {
-                Matcher matcher = cPattern.matcher(textLines[i]);
+            String[] roleAndTextSplit = textLines[i].split(": ", 2);
 
-                if (matcher.find() && matcher.start() == 0) {
-                    map.get(cPattern).append(i+1).append(") ").append(textLines[i], matcher.end() + 1, textLines[i].length()).append("\n");
-                    break;
-                }
-            }
+            map.get(roleAndTextSplit[0]).append(i + 1).append(") ").append(roleAndTextSplit[1]).append("\n");
+
         }
 
-        for (Pattern role : patternList) {
-            sb.append(role).append("\n");
+        for (String role : roles) {
+            sb.append(role).append(":").append("\n");
             sb.append(map.get(role));
         }
 
